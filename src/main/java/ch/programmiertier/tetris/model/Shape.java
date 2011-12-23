@@ -57,13 +57,9 @@ public class Shape {
     public int getShape(int row, int slot) {
         return shape[row][slot];
     }
-
+    
     public void setShape(int row, int slot, int value) {
         shape[row][slot] = value;
-    }
-
-    public void setShape(int[][] newShape) {
-        shape = newShape;
     }
 
     private void genStatic() {

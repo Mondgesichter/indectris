@@ -12,7 +12,11 @@ import javax.swing.*;
  * @author Patrick Buchter <patrick.buchter@stud.hslu.ch>, Silvano Brugnoni <silvano.brugnoni@stud.hslu.ch
  */
 public class Nirvana {
-
+    
+    /**
+     * Utility classes should not have a public or default constructor.
+     */
+    private Nirvana() {}
     /**
      * @param args the command line arguments
      */

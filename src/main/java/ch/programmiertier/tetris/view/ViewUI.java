@@ -2,10 +2,12 @@ package ch.programmiertier.tetris.view;
 
 import ch.programmiertier.tetris.model.*;
 import ch.programmiertier.tetris.control.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 public class ViewUI extends JPanel implements Listener, KeyListener, WindowListener {
 
     //ArrayList für die angemeldeten Listener
-    private ArrayList<Controller> control = new ArrayList<Controller>();
+    private List<Controller> control = new ArrayList<Controller>();
     //Grösse des Spielfelds
     private Dimension dimension;
     //Auf diesem Panel wird das Feld gezeichnet

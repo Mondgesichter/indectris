@@ -1,7 +1,8 @@
 package ch.programmiertier.tetris.control;
 
-import ch.programmiertier.tetris.model.*;
-import java.util.Random;
+import ch.programmiertier.tetris.model.Field;
+import ch.programmiertier.tetris.model.Shape;
+
 
 /**
  * Aufgabe: Shapes erzeugen und bewegen
@@ -12,12 +13,12 @@ public class ShapeHandler {
     Field field;
     Deleter deleter;
     Shape shape;
-    Random rnd;
+    // Random rnd; unread field
 
     public ShapeHandler(Field field, Deleter deleter) {
         this.field = field;
         this.deleter = deleter;
-        rnd = new Random();
+        // rnd = new Random();
     }
 
     /**
@@ -127,13 +128,13 @@ public class ShapeHandler {
                     shape.setShape(i, 1, shape.getShape(i, 0));
                     shape.setShape(i, 0, tmp * (-1));
                 }
-                if (!notValid(field.getActualPos()[0], field.getActualPos()[1])) {
-                } else {
+                if (notValid(field.getActualPos()[0], field.getActualPos()[1])) {                 
                     for (int i = 0; i < 4; i++) {
                         shape.setShape(i, 0, temp[i][0]);
                         shape.setShape(i, 1, temp[i][1]);
                     }
                 }
+              
                 break;
             case 2:
             case 3:
@@ -143,8 +144,7 @@ public class ShapeHandler {
                     shape.setShape(i, 1, shape.getShape(i, 0));
                     shape.setShape(i, 0, tmp * (-1));
                 }
-                if (!notValid(field.getActualPos()[0], field.getActualPos()[1])) {
-                } else {
+                if (notValid(field.getActualPos()[0], field.getActualPos()[1])) {
                     for (int i = 0; i < 4; i++) {
                         shape.setShape(i, 0, temp[i][0]);
                         shape.setShape(i, 1, temp[i][1]);

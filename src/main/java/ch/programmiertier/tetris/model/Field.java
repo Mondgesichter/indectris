@@ -2,6 +2,7 @@ package ch.programmiertier.tetris.model;
 
 import java.util.ArrayList;
 import ch.programmiertier.tetris.view.*;
+import java.util.List;
 
 /**
  * Aufgabe: Speichert den Zustand des Felds
@@ -22,7 +23,7 @@ public class Field {
     private boolean paused;
 
     //Listener, die über änderungen am Field benachrichtigt werden sollen
-    private ArrayList<Listener> listeners = new ArrayList<Listener>();
+    private List<Listener> listeners = new ArrayList<Listener>();
 
     /**
      * Konstruktor, initialisiert das Field

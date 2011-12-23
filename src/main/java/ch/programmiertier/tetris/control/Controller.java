@@ -4,59 +4,53 @@ import ch.programmiertier.tetris.model.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Steuert den Programmablauf
+ * Steuert den Programmablauf.
  * @author Patrick Buchter <patrick.buchter@stud.hslu.ch>
  */
-public class Controller extends Thread
-{
+public class Controller extends Thread {
 
     private Field field;
     private ShapeHandler handler;
     private Deleter deleter;
-    private ArrayList<Integer> NoL;
-//
+    private List<Integer> numberOfLines;
 
     /**
-     * Konstruktor
+     * Konstruktor.
      * @param field
      */
-    public Controller(Field field)
-    {
+    public Controller(Field field) {
         this.field = field;
         deleter = new Deleter(this.field, this);
         handler = new ShapeHandler(this.field, this.deleter);
-        NoL = new ArrayList<Integer>();
-
-
-
+        numberOfLines = new ArrayList<Integer>();
     }
 
-    public void setNoL(ArrayList<Integer> NoL) {
-         this.NoL = NoL;
+    public synchronized void setNumerOfLines(final List<Integer> lines) {
+        this.numberOfLines = lines;
     }
 
     /**
-     * Startet eine neue Runde Tetris
+     * Startet eine neue Runde Tetris.
      *
      */
     @Override
-    public synchronized void start()
-    {
+    public final synchronized void start() {
         handler.newShape();
         //testCase();
         while (!field.getGameOver()) {
             try {
                 for (int i = 0; i * 10 < field.getSpeed(); i++) {
-                    if (NoL.size() > 0) {
-                        blink(NoL);
-                        deleter.deLines(NoL);
-                        NoL.clear();
+                    if (numberOfLines.size() > 0) {
+                        blink(numberOfLines);
+                        deleter.deLines(numberOfLines);
+                        numberOfLines.clear();
                         continue;
                     } else {
                         wait(10);
-                    }       
+                    }
                 }
                 while (field.isPaused()) {
                     wait(10);
@@ -71,18 +65,16 @@ public class Controller extends Thread
         }
     }
 
-        public void blink(ArrayList<Integer> NoL) {
-
+    public final void blink(List<Integer> lines) {
         try {
-            for (int a = 0; a < 6; a ++) {
-                for (int actuaLine = 0; actuaLine < NoL.size(); actuaLine ++) {
-                    for (int j = 0; j < field.getSlots(); j ++) {
-                        if(field.getField(NoL.get(actuaLine), j)>=0) {
-                            field.set(NoL.get(actuaLine), j, -1);
+            for (int a = 0; a < 6; a++) {
+                for (int actuaLine = 0; actuaLine < lines.size(); actuaLine++) {
+                    for (int j = 0; j < field.getSlots(); j++) {
+                        if (field.getField(lines.get(actuaLine), j) >= 0) {
+                            field.set(lines.get(actuaLine), j, -1);
                         } else {
-                            field.set(NoL.get(actuaLine), j, 0);
+                            field.set(lines.get(actuaLine), j, 0);
                         }
-
                     }
                 }
                 sleep(50);
@@ -93,13 +85,12 @@ public class Controller extends Thread
     }
 
     /**
-     * M�gliche Keywords: SPACE, LEFT, RIGHT, UP
-     * @param input
+     * allowed Keywords: SPACE, LEFT, RIGHT, UP.
+     * @param input pressed key
      */
-    public void input(String input)
-    {
+    public final void input(String input) {
         //steuerung
-        if ( ! field.isPaused()) {
+        if (!field.isPaused()) {
             if (input.equals("SPACE")) {
                 handler.drop();
             }
@@ -115,10 +106,8 @@ public class Controller extends Thread
             if (input.equals("DOWN")) {
                 handler.moveDown();
             }
-
         }
-
-        //Programm beenden
+        // Programm beenden
         if (input.equals("CLOSE") || input.equals("Q")) {
             System.exit(0);
         }
