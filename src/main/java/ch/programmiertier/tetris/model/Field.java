@@ -79,8 +79,7 @@ public class Field {
     }
 
     public long getSpeed() {
-        long speed = 1000 - (getLevel()*100);
-        return speed;
+        return 1000 - (getLevel()*100);
     }
 
     /**
